@@ -1,0 +1,123 @@
+N = S DECL DECL_CONST DECL_CONST_L DECL_VAR DECL_VAR_L DECL_ARGS DECL_ARGS_L DECL_PROC DECL_FUNC BLOCK COMMAND COMMAND_L ELSE EXPR EXPR1 EXPR2 EXPR2_L EXPR3 EXPR3_L EXPR4 EXPR4_L EXPR5 EXPR5_L EXPR6 EXPR6_L EXPR7_L FACTOR TYPE DECL_FUNC_L DECL_PROC_L DECL_FUNC_LL DECL_PROC_LL FOR_L FACTOR_L IDENT ARGS ARGS_L
+T = program ident semicolon begin end stop const assign numb comma var colon procedure lpar rpar function lsqbrac rsqbrac to downto for while write writeln do else of eq neq lt lte gt gte and or integer array plus minus times mod divide then if break exit
+
+S -> program ident semicolon DECL BLOCK end stop
+
+DECL -> DECL_CONST DECL
+DECL -> DECL_VAR DECL
+DECL -> DECL_FUNC DECL
+DECL -> DECL_PROC DECL
+DECL ->
+
+DECL_CONST -> const ident eq numb DECL_CONST_L semicolon DECL_CONST_LL
+DECL_CONST_L -> comma ident eq numb DECL_CONST_L
+DECL_CONST_L ->
+
+DECL_CONST_LL -> const ident eq numb DECL_CONST_L semicolon DECL_CONST_LL
+DECL_CONST_LL ->
+
+DECL_VAR -> var ident DECL_VAR_L colon TYPE semicolon DECL_VAR_LL
+DECL_VAR_L -> comma ident DECL_VAR_L
+DECL_VAR_L ->
+
+DECL_VAR_LL -> ident DECL_VAR_L colon TYPE semicolon DECL_VAR_LL
+DECL_VAR_LL ->
+
+DECL_ARGS ->
+DECL_ARGS -> ident colon TYPE DECL_ARGS_L
+DECL_ARGS_L -> comma ident colon TYPE
+DECL_ARGS_L ->
+
+DECL_PROC -> procedure ident DECL_PROC_L
+
+DECL_PROC_L -> lpar DECL_ARGS rpar semicolon DECL_PROC_LL
+DECL_PROC_L -> semicolon DECL_PROC_LL
+
+DECL_PROC_LL -> DECL BLOCK semicolon
+DECL_PROC_LL -> forward semicolon
+
+DECL_FUNC -> function ident DECL_FUNC_L
+
+DECL_FUNC_L -> lpar DECL_ARGS rpar colon TYPE semicolon DECL_FUNC_LL
+DECL_FUNC_L -> colon TYPE semicolon DECL_FUNC_LL
+
+DECL_FUNC_LL -> DECL BLOCK semicolon
+DECL_FUNC_LL -> forward semicolon
+
+BLOCK -> begin COMMAND COMMAND_L end
+
+COMMAND -> BLOCK
+COMMAND -> exit
+COMMAND -> break
+COMMAND -> ident IDENT
+COMMAND -> write lpar EXPR rpar
+COMMAND -> writeln lpar EXPR rpar
+COMMAND -> if EXPR then COMMAND ELSE
+COMMAND -> while EXPR do COMMAND
+COMMAND -> for ident assign EXPR FOR_L
+COMMAND ->
+
+COMMAND_L -> semicolon COMMAND COMMAND_L
+COMMAND_L ->
+
+IDENT -> assign EXPR
+IDENT -> lsqbrac EXPR rsqbrac assign EXPR
+IDENT -> lpar ARGS rpar
+
+ARGS -> EXPR ARGS_L
+ARGS ->
+ARGS_L -> comma EXPR ARGS_L
+ARGS_L ->
+
+FOR_L -> to EXPR do COMMAND
+FOR_L -> downto EXPR do COMMAND
+
+ELSE -> else COMMAND
+ELSE ->
+
+EXPR -> EXPR6 EXPR7_L
+EXPR -> string
+
+EXPR7_L -> or EXPR6 EXPR7_L
+EXPR7_L ->
+
+EXPR6 -> EXPR5 EXPR6_L
+EXPR6_L -> and EXPR5 EXPR6_L
+EXPR6_L ->
+
+EXPR5 -> EXPR4 EXPR5_L
+EXPR5_L -> eq EXPR4 EXPR5_L
+EXPR5_L -> neq EXPR4 EXPR5_L
+EXPR5_L ->
+
+EXPR4 -> EXPR3 EXPR4_L
+EXPR4_L -> lt EXPR3 EXPR4_L
+EXPR4_L -> lte EXPR3 EXPR4_L
+EXPR4_L -> gt EXPR3 EXPR4_L
+EXPR4_L -> gte EXPR3 EXPR4_L
+EXPR4_L ->
+
+EXPR3 -> EXPR2 EXPR3_L
+EXPR3_L -> plus EXPR2 EXPR3_L
+EXPR3_L -> minus EXPR2 EXPR3_L
+EXPR3_L ->
+
+EXPR2 -> EXPR1 EXPR2_L
+EXPR2_L -> times EXPR1 EXPR2_L
+EXPR2_L -> divide EXPR1 EXPR2_L
+EXPR2_L -> mod EXPR1 EXPR2_L
+EXPR2_L ->
+
+EXPR1 -> FACTOR
+EXPR1 -> minus FACTOR
+
+FACTOR -> numb
+FACTOR -> ident FACTOR_L
+FACTOR -> lpar EXPR rpar
+
+FACTOR_L -> lsqbrac EXPR rsqbrac
+FACTOR_L -> lpar EXPR rpar
+FACTOR_L ->
+
+TYPE -> integer
+TYPE -> array lsqbrac EXPR stop stop EXPR rsqbrac of TYPE
